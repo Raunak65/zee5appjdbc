@@ -6,16 +6,19 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 
 public class PasswordUtils {
-	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	private static final int ITERATIONS = 10000;
 	private static final int KEY_LENGTH = 256;
-
+	private static Random RANDOM = new SecureRandom();
+	
 	public static String getSalt(int length) {
 		StringBuilder returnValue = new StringBuilder(length);
 		for (int i = 0; i < length; i++) {
@@ -36,7 +39,7 @@ public class PasswordUtils {
 			spec.clearPassword();
 		}
 	}
-
+	
 	public static String generateSecurePassword(String password, String salt) {
 		String returnValue = null;
 		byte[] securePassword = hash(password.toCharArray(), salt.getBytes());
@@ -45,7 +48,7 @@ public class PasswordUtils {
 
 		return returnValue;
 	}
-
+	
 	public static boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {
 		boolean returnValue = false;
 
@@ -59,3 +62,6 @@ public class PasswordUtils {
 	}
 	 
 }
+
+
+

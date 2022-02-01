@@ -32,14 +32,12 @@ import com.zee.zee5app.utils.PasswordUtils;
 public class UserRepositoryImpl implements UserRepository2 {
 	
 	@Autowired // it will bring ur already created object either by using name / type
-	DataSource dataSource;
+	private DataSource dataSource;
 	@Autowired
-	LoginRepository loginRepository;
+	private LoginRepository loginRepository;
+	@Autowired
+	private PasswordUtils passwordUtils;
 
-	public UserRepositoryImpl() throws IOException {
-		loginRepository = LoginRepositoryImpl.getInstance();
-		//dbutils = DBUtils.getInstance();
-	}
 	
 	
 	
@@ -68,8 +66,7 @@ public class UserRepositoryImpl implements UserRepository2 {
 			preparedStatement.setString(3, register.getLastName());
 			preparedStatement.setString(4, register.getEmail());
 			preparedStatement.setBigDecimal(5, register.getContactnumber());
-			String salt = PasswordUtils.getSalt(30);
-			String encryptedPassword = PasswordUtils.generateSecurePassword(register.getPassword(),salt);
+			String encryptedPassword = passwordUtils.generateSecurePassword(register.getPassword(),passwordUtils.getSalt(30));
 			preparedStatement.setString(6, encryptedPassword);
 			
 			
@@ -82,7 +79,7 @@ public class UserRepositoryImpl implements UserRepository2 {
 //			returns number of rows affected by DML statement.
 			int result = preparedStatement.executeUpdate();
 			if(result>0) {
-//				connection.commit();
+				connection.commit();
 				Login login = new Login();
 				login.setUsername(register.getEmail());
 				login.setPassword(encryptedPassword);
@@ -193,8 +190,7 @@ public class UserRepositoryImpl implements UserRepository2 {
 			preparedStatement.setString(3, register.getEmail());
 			preparedStatement.setBigDecimal(4, register.getContactnumber());
 			preparedStatement.setString(6, register.getId());
-			String salt = PasswordUtils.getSalt(30);
-			String encryptedPassword = PasswordUtils.generateSecurePassword(register.getPassword(),salt);
+			String encryptedPassword = passwordUtils.generateSecurePassword(register.getPassword(),passwordUtils.getSalt(30));
 			preparedStatement.setString(5, encryptedPassword);
 			
 			

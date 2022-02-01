@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
+
+import com.zee.zee5app.utils.PasswordUtils;
 
 @Configuration //it is used to mark on config class/classes
 //here we will hold all commonly required objects for our application
@@ -21,8 +24,9 @@ public class Config {
 	Environment environment; //this impl object is prepared by spring
 	//we need to inject already created object ===> DI ===> IoC
 	
-	@Bean //for providing the singleton object
+	@Bean(name="ds") //for providing the singleton object
 	//if we will not specify the bean name then it will take/consider the method as bean name
+	@Scope("singleton")
 	public DataSource dataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
 		basicDataSource.setUsername(environment.getProperty("jdbc.username"));
@@ -31,4 +35,11 @@ public class Config {
 		basicDataSource.setDefaultAutoCommit(false);
 		return basicDataSource;
 	}
+	@Bean
+	public PasswordUtils passwordUtils() {
+		return new PasswordUtils();
+	}
+	
+	
+	
 }

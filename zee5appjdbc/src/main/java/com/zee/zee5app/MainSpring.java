@@ -1,32 +1,4 @@
-//package com.zee.zee5app;
-//
-//import javax.sql.DataSource;
-//
-//import org.apache.commons.dbcp2.BasicDataSource;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-//import org.springframework.context.support.AbstractApplicationContext;
-//
-//import com.zee.zee5app.config.Config;
-//import com.zee.zee5app.repository.UserRepository2;
-//import com.zee.zee5app.service.UserService2;
-//
-//public class MainSpring {
-//
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		AbstractApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
-//		UserService2 userRepository = applicationContext.getBean(UserService2.class);
-//		System.out.println(userRepository);
-//		
-//		
-//		BasicDataSource dataSource = applicationContext.getBean("dataSource",BasicDataSource.class);
-//		System.out.println(dataSource!=null);
-//		applicationContext.close();
-//
-//	}
-//
-//}
+
 package com.zee.zee5app;
 
 import java.math.BigDecimal;
@@ -73,13 +45,16 @@ public class MainSpring {
 		System.out.println(movieimpl.hashCode());
 		
 		System.out.println(userRepository.equals(userRepository2));
+		System.out.println("Current checkpoint=============");
+		DataSource dataSource = applicationContext.getBean("ds",DataSource.class);
+		System.out.println(dataSource.hashCode());
+		DataSource dataSource2 = applicationContext.getBean("ds",DataSource.class);
+		System.out.println(dataSource.hashCode());
 		
-		DataSource dataSource = applicationContext.getBean("dataSource",DataSource.class);
-		System.out.println(dataSource != null);
+		System.out.println(dataSource.equals(dataSource2));
 		
-		Register register;
 		try {
-			register = new Register("raunak6","Rauank","CHandak","abc.def@6mail.com","pass@afes");
+			Register register = new Register("raunak6","Rauank","CHandak","abc.def@6mail.com","pass@afes");
 			register.setContactnumber(new BigDecimal("7867890134"));
 			System.out.println(userRepository.addUser(register));
 		} catch (IdInvalidLengthException | InvalidEmailException | InvalidPasswordException e) {

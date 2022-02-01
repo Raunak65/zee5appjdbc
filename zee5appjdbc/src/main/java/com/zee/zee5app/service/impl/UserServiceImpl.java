@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.naming.InvalidNameException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,8 @@ import com.zee.zee5app.service.UserService2;
 
 @Service
 public class UserServiceImpl implements UserService2 {
-	
+	@Autowired
 	private UserRepository2 repository ;
-	private static UserService2 userservice;
 
 
 	@Override

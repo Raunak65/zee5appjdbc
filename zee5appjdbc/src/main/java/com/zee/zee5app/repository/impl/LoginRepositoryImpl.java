@@ -23,13 +23,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 	@Autowired // it will bring ur already created object either by using name / type
 	DataSource dataSource;
 	
-	private static LoginRepository repository = null;
-	public static LoginRepository getInstance() {
-		if(repository == null){
-			repository = new LoginRepositoryImpl();
-		}
-		return repository;
-	}
+	private LoginRepository repository;
 	
 
 	
@@ -58,7 +52,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 			preparedStatement.setString(4, login.getRole().toString());
 			int result = preparedStatement.executeUpdate();
 			if (result>0) {
-//				connection.commit();
+				connection.commit();
 				return "Success";
 			}
 			else {

@@ -49,7 +49,7 @@ public class DBUtils {
 	}
 	@Bean
 	public Properties loadProperties() throws IOException {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("Application.properties");
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
         return properties;

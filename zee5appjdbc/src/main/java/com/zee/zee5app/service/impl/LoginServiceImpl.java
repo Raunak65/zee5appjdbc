@@ -17,7 +17,6 @@ import com.zee.zee5app.service.UserService2;
 public class LoginServiceImpl implements LoginService {
 
 	private LoginRepository repository ;
-	private static LoginService loginservice;
 
 	@Override
 	public String addCredentials(Login login) throws SQLException {
